@@ -13,6 +13,7 @@ public class FakeStoreProductService implements ProductService {
 
     public FakeStoreProductService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+
     }
 
     @Override
