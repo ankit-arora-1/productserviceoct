@@ -1,6 +1,8 @@
 package com.scaler.productservice.controllers;
 
 import com.scaler.productservice.dtos.CreateProductRequestDto;
+import com.scaler.productservice.dtos.ErrorDto;
+import com.scaler.productservice.exceptions.ProductNotFoundException;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.FakeStoreProductService;
 import com.scaler.productservice.services.ProductService;
@@ -28,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public Product getProductDetails(@PathVariable("id") Long id) {
+    public Product getProductDetails(@PathVariable("id") Long id) throws ProductNotFoundException {
         return productService.getProductDetails(id);
     }
 
@@ -48,6 +50,28 @@ public class ProductController {
 
         return responseEntity;
     }
+
+//    @ExceptionHandler(NullPointerException.class)
+//    public ResponseEntity<ErrorDto> handleNPEException() {
+//        ErrorDto errorDto = new ErrorDto();
+//        errorDto.setMessage("Something went wrong");
+//
+//        ResponseEntity<ErrorDto> responseEntity = new ResponseEntity<>(errorDto,
+//                HttpStatusCode.valueOf(501));
+//
+//        return responseEntity;
+//    }
+//
+//    @ExceptionHandler(ProductNotFoundException.class)
+//    public ResponseEntity<ErrorDto> handlePNFException() {
+//        ErrorDto errorDto = new ErrorDto();
+//        errorDto.setMessage("Product Not found. Please try again");
+//
+//        ResponseEntity<ErrorDto> responseEntity = new ResponseEntity<>(errorDto,
+//                HttpStatusCode.valueOf(404));
+//
+//        return responseEntity;
+//    }
 }
 
 // 1xx: information based responses
