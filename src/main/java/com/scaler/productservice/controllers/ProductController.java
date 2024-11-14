@@ -7,6 +7,7 @@ import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.FakeStoreProductService;
 import com.scaler.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class ProductController {
     private ProductService productService;
 
 
-    public ProductController(ProductService productService) {
+    public ProductController(@Qualifier("databaseProductService") ProductService productService) {
         this.productService = productService;
     }
 
