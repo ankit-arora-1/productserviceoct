@@ -14,4 +14,5 @@ public class Product extends BaseModel {
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Category category;
+    private int quantity;
 }
