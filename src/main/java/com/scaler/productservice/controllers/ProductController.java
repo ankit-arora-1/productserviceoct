@@ -21,13 +21,18 @@ public class ProductController {
     private ProductService productService;
 
 
-    public ProductController(@Qualifier("databaseProductService") ProductService productService) {
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        ResponseEntity<List<Product>> responseEntity =
+                new ResponseEntity<>(products,
+                        HttpStatusCode.valueOf(200));
+
+        return responseEntity;
     }
 
     @GetMapping("/products/{id}")

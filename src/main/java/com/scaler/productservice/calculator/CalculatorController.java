@@ -1,6 +1,10 @@
 package com.scaler.productservice.calculator;
 
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class CalculatorController {
+
     private CalculatorService calculatorService;
 
     public CalculatorController(CalculatorService calculatorService) {
