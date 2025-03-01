@@ -1,6 +1,7 @@
 package com.scaler.productservice.advices;
 
 import com.scaler.productservice.dtos.ErrorDto;
+import com.scaler.productservice.exceptions.InvalidTokenException;
 import com.scaler.productservice.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,17 @@ public class CustomControllerAdvice {
         return responseEntity;
     }
 
-    @ExceptionHandler(Exception.class)
-    public void handleAllExceptions() {
+//    @ExceptionHandler(Exception.class)
+//    public void handleAllExceptions() {
+//
+//    }
 
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ErrorDto> handleInvalidTokenException() {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Invalid token");
+
+        return new ResponseEntity<>(errorDto,
+                HttpStatusCode.valueOf(401));
     }
 }

@@ -1,11 +1,15 @@
 package com.scaler.productservice.controllers;
 
+import com.scaler.productservice.commons.AuthenticationCommons;
 import com.scaler.productservice.dtos.CreateProductRequestDto;
 import com.scaler.productservice.dtos.ErrorDto;
+import com.scaler.productservice.dtos.UserDto;
+import com.scaler.productservice.exceptions.InvalidTokenException;
 import com.scaler.productservice.exceptions.ProductNotFoundException;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.FakeStoreProductService;
 import com.scaler.productservice.services.ProductService;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatusCode;
@@ -19,10 +23,13 @@ import java.util.List;
 public class ProductController {
 
     private ProductService productService;
+    private AuthenticationCommons authenticationCommons;
 
 
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService) {
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService,
+                             AuthenticationCommons authenticationCommons) {
         this.productService = productService;
+        this.authenticationCommons = authenticationCommons;
     }
 
     @GetMapping("/products")
@@ -36,7 +43,13 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public Product getProductDetails(@PathVariable("id") Long id) throws ProductNotFoundException {
+    public Product getProductDetails(@PathVariable("id") Long id,
+                                     @Nullable @RequestHeader("Authorization") String token) throws ProductNotFoundException, InvalidTokenException {
+        UserDto userDto = authenticationCommons.validateToken(token);
+        if(userDto == null) {
+            throw new InvalidTokenException();
+        }
+
         return productService.getProductDetails(id);
     }
 
