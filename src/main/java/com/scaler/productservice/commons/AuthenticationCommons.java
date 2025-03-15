@@ -29,7 +29,7 @@ public class AuthenticationCommons {
 
         // Use exchange method to make the request with headers
         ResponseEntity<UserDto> response = restTemplate.exchange(
-                "http://localhost:8081/user/validate",
+                "http://UserService/user/validate",
                 HttpMethod.POST,
                 entity,
                 UserDto.class
