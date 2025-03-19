@@ -6,33 +6,31 @@ import com.scaler.productservice.models.Product;
 import com.scaler.productservice.repositories.CategoryRepository;
 import com.scaler.productservice.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+//import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service("databaseProductService")
+//@Service("databaseProductService")
 public class DatabaseProductService implements ProductService {
 
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
-    private RedisTemplate<String, Object> redisTemplate;
+//    private RedisTemplate<String, Object> redisTemplate;
 
     public DatabaseProductService(ProductRepository productRepository,
-                                  CategoryRepository categoryRepository,
-                                  RedisTemplate redisTemplate) {
+                                  CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
-        this.redisTemplate = redisTemplate;
     }
 
     @Override
     public Product getProductDetails(Long id) throws ProductNotFoundException {
-        Product productFromCache = (Product) redisTemplate.opsForValue().get(String.valueOf(id));
-        if(productFromCache != null) {
-            return productFromCache;
-        }
+//        Product productFromCache = (Product) redisTemplate.opsForValue().get(String.valueOf(id));
+//        if(productFromCache != null) {
+//            return productFromCache;
+//        }
 
         // TODO: Add null check and throw ProductNotFound exception if product is not found
         Optional<Product> productOptionalFromDb = productRepository.findById(id);
@@ -45,7 +43,7 @@ public class DatabaseProductService implements ProductService {
         Product productFromDb = productOptionalFromDb.get();
         System.out.println(productFromDb.getTitle());
 
-        redisTemplate.opsForValue().set(String.valueOf(id), productFromDb);
+//        redisTemplate.opsForValue().set(String.valueOf(id), productFromDb);
 
         return productFromDb;
     }

@@ -26,7 +26,7 @@ public class ProductController {
     private AuthenticationCommons authenticationCommons;
 
 
-    public ProductController(@Qualifier("databaseProductService") ProductService productService,
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService,
                              AuthenticationCommons authenticationCommons) {
         this.productService = productService;
         this.authenticationCommons = authenticationCommons;
@@ -45,10 +45,10 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public Product getProductDetails(@PathVariable("id") Long id,
                                      @Nullable @RequestHeader("Authorization") String token) throws ProductNotFoundException, InvalidTokenException {
-        UserDto userDto = authenticationCommons.validateToken(token);
-        if(userDto == null) {
-            throw new InvalidTokenException();
-        }
+//        UserDto userDto = authenticationCommons.validateToken(token);
+//        if(userDto == null) {
+//            throw new InvalidTokenException();
+//        }
 
         return productService.getProductDetails(id);
     }

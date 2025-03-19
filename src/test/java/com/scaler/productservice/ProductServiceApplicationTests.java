@@ -17,11 +17,11 @@ import java.util.Optional;
 @SpringBootTest
 class ProductServiceApplicationTests {
 
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
+//    @Autowired
+//    private ProductRepository productRepository;
+//
+//    @Autowired
+//    private CategoryRepository categoryRepository;
 
 
     @Test

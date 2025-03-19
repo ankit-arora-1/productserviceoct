@@ -22,22 +22,20 @@ import java.util.List;
 public class FakeStoreProductService implements ProductService {
 
     private RestTemplate restTemplate;
-    private RedisTemplate<String, Object> redisTemplate;
+    //private RedisTemplate<String, Object> redisTemplate;
 
-    public FakeStoreProductService(RestTemplate restTemplate,
-                                   RedisTemplate redisTemplate) {
+    public FakeStoreProductService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.redisTemplate = redisTemplate;
 
     }
 
     @Override
     public Product getProductDetails(Long id) throws ProductNotFoundException {
-        Product productFromCache = (Product) redisTemplate
-                .opsForValue().get(String.valueOf(id));
-        if(productFromCache != null) {
-            return productFromCache;
-        }
+//        Product productFromCache = (Product) redisTemplate
+//                .opsForValue().get(String.valueOf(id));
+//        if(productFromCache != null) {
+//            return productFromCache;
+//        }
 //        FakeStoreProductDto responseDto =
 //                restTemplate.getForObject(
 //                        "https://fakestoreapi.com/products/" + id,
@@ -63,11 +61,11 @@ public class FakeStoreProductService implements ProductService {
 
         Product product = responseBody.toProduct();
 
-        if(true) {
-            redisTemplate
-                    .opsForValue()
-                    .set(String.valueOf(id), product);
-        }
+//        if(true) {
+//            redisTemplate
+//                    .opsForValue()
+//                    .set(String.valueOf(id), product);
+//        }
 
 
         return product;
